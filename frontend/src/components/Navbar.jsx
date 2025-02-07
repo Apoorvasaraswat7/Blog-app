@@ -26,7 +26,7 @@ const Navbar = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        "http://localhost:4001/api/users/logout",
+        `${process.env.REACT_APP_API_URL}/api/users/logout`,
         { withCredentials: true }
       );
       toast.success(data.message);

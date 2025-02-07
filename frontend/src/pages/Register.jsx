@@ -40,7 +40,7 @@ const Register = () => {
     formData.append("education", education);
     formData.append("photo", photo);
     try {
-      const {data} = await axios.post("http://localhost:4001/api/users/register",formData,{
+      const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`,formData,{
        
         headers: {
           "Content-Type": "multipart/form-data",

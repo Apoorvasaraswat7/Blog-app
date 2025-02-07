@@ -29,7 +29,7 @@ function UpdateBlog() {
     const fetchBlog = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4001/api/blogs/single-blog/${id}`,
+          `${process.env.REACT_APP_API_URL}/api/blogs/single-blog/${id}`,
 
           {
             withCredentials: true,
@@ -65,7 +65,7 @@ function UpdateBlog() {
   
     try {
       const { data } = await axios.put(
-        `http://localhost:4001/api/blogs/update/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/blogs/update/${id}`,
         formData,
         {
           withCredentials: true,
