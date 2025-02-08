@@ -10,12 +10,14 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+
+    
     const fetchProfile = async () => {
       try {
         const token = Cookies.get("token"); // Get token from cookies
         if (!token) return; // If token doesn't exist, stop execution
 
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/my-profile`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/users/my-profile`, {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchBlogs = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/blogs/all-blogs`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/blogs/all-blogs`, {
           withCredentials: true,
         });
 

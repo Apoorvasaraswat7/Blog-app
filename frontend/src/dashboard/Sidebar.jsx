@@ -19,7 +19,7 @@ function Sidebar({ setComponent }) {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/users/logout`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/users/logout`,
         { withCredentials: true }
       );
       toast.success(data.message);
