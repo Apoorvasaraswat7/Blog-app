@@ -21,7 +21,10 @@ const MONG0_URL = process.env.MONGO_URI;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173", // Match the exact origin (no trailing slash)
+  origin: [
+    "http://localhost:5173", // Local development
+    "https://blog-app-frontend-flax.vercel.app" // Deployed frontend
+  ], // Match the exact origin (no trailing slash)
   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
   credentials: true, // Allow credentials (cookies, authorization headers)
 }));
