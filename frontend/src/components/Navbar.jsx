@@ -89,7 +89,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Icon */}
-          <div className="md:hidden text-white">
+          <div className="md:hidden text-black">
             {isMobileMenuOpen ? (
               <IoCloseSharp
                 className="text-2xl cursor-pointer"
