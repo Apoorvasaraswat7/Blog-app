@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchBlogs = async () => {
       try {
-        const { data } = await axios.get("${process.env.REACT_APP_API_URL}/api/blogs/all-blogs", {
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/blogs/all-blogs`, {
           withCredentials: true,
         });
 
