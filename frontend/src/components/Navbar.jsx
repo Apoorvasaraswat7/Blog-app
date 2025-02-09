@@ -9,18 +9,13 @@ import { MdDashboard } from "react-icons/md";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
-  const { blogs } = useAuth();
-  console.log(blogs);
-
+  const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigateTo = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
-  console.log(profile?.user);
-  const navigateTo = useNavigate();
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -30,7 +25,7 @@ const Navbar = () => {
         { withCredentials: true }
       );
       toast.success(data.message);
-      localStorage.removeItem("jwt"); // deleting token in localStorage so that if user logged out it will go to login page
+      localStorage.removeItem("jwt");
       setIsAuthenticated(false);
       navigateTo("/login");
     } catch (error) {
@@ -57,12 +52,12 @@ const Navbar = () => {
             <Link to="/contact" className='hover:text-red-500'>CONTACT</Link>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons (Desktop) */}
           <div className='hidden md:flex space-x-4'>
             {isAuthenticated && profile?.user?.role === "admin" && (
               <Link
                 to="/dashboard"
-                className="flex items-center gap-1 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold px-6 py-2 rounded-lg shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-cyan-600 hover: hover:shadow-xl"
+                className="flex items-center gap-1 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold px-6 py-2 rounded-lg shadow-lg transition-all duration-300 hover:from-blue-700 hover:to-cyan-600 hover:shadow-xl"
               >
                 <MdDashboard className="text-lg" />
                 DASHBOARD
@@ -72,7 +67,7 @@ const Navbar = () => {
             {!isAuthenticated ? (
               <Link
                 to="/login"
-                className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold px-6 py-2 rounded-lg shadow-lg transition-all duration-300 hover:from-green-600 hover:to-teal-600 hover: hover:shadow-xl"
+                className="flex items-center gap-1 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold px-6 py-2 rounded-lg shadow-lg transition-all duration-300 hover:from-green-600 hover:to-teal-600 hover:shadow-xl"
               >
                 <FiLogIn className="text-lg" />
                 LOGIN
@@ -113,22 +108,37 @@ const Navbar = () => {
             <Link to="/creators" className='block hover:text-red-500'>CREATORS</Link>
             <Link to="/contact" className='block hover:text-red-500'>CONTACT</Link>
 
-            <div className="space-y-2 mt-4">
+            {/* Dashboard Button (Only Admin) */}
+            {/* Dashboard Button (Only Admin) */}
+            {isAuthenticated && profile?.user?.role === "admin" && (
               <Link
                 to="/dashboard"
-                className="block bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+                className="block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
               >
-                <MdDashboard className="text-lg inline-block" />
+                <MdDashboard className="text-lg inline-block mr-2" />
                 Dashboard
               </Link>
+            )}
+
+            {/* Login & Logout Handling */}
+            {!isAuthenticated ? (
               <Link
                 to="/login"
-                className="block bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+                className="block w-full text-center bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
               >
-                <FiLogIn className="text-lg inline-block" />
+                <FiLogIn className="text-lg inline-block mr-2" />
                 Login
               </Link>
-            </div>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="block w-full text-center bg-gradient-to-r from-red-500 to-pink-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+              >
+                <FiLogOut className="text-lg inline-block mr-2" />
+                Logout
+              </button>
+            )}
+
           </div>
         )}
       </nav>
